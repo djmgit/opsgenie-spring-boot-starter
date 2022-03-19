@@ -32,7 +32,7 @@ public class OpsgenieAutoconfiguration {
     @Bean
     @ConditionalOnMissingBean
     public OpsgenieConfig opsgenieConfig() {
-        String opsgenieApiKey = this.opsgenieProperties.getOpsgenieApiKey() == null ? System.getProperty(OPSGENIE_API_KEY) : this.opsgenieProperties.getOpsgenieApiKey();
+        String opsgenieApiKey = this.opsgenieProperties.getOpsgenieApiKey() == null ? System.getenv(OPSGENIE_API_KEY) : this.opsgenieProperties.getOpsgenieApiKey();
         String opsgenieApiBase = this.opsgenieProperties.getOpsgenieApiBase() == null ? "https://api.opsgenie.com" : this.opsgenieProperties.getOpsgenieApiBase();
 
         OpsgenieConfig opsgenieConfig = new OpsgenieConfig();
