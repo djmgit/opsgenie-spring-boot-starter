@@ -18,5 +18,6 @@ public class OpsgenieConfigParams {
     public static final String OPSGENIE_ALERT_EXCEPTION_ALIAS = "opsgenie.alert.alias.exception";
     public static final String OPSGENIE_RESPONDER = "opsgenie.alert.responder";
     public static final String OPSGENIE_SERVICE_ID = "opsgenie.service.id";
+    public static final String HOST = "opsgenie.host";
 
 }
