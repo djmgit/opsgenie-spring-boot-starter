@@ -66,6 +66,7 @@ public class Util {
         this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getMonitoredEndpoints(), OPSGENIE_MONITORED_ENDPOINTS);
         this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getIgnoredEndpoints(), OPSGENIE_IGNORED_ENDPOINTS);
         this.stringToHashMapTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getAlertDetails(), OPSGENIE_ALERT_DETAILS);
+        this.stringToHashMapTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getResponder(), OPSGENIE_RESPONDER);
         opsgenieConfig.put(OPSGENIE_THRESHOLD_RESPONSE_TIME ,this.opsgenieProperties.getThresholdResponseTime());
         this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getResponseTimeMonitoredEndpoints(), OPSGENIE_RESPONSE_TIME_MONITORED_ENDPOINTS);
         this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getAlertTags(), OPSGENIE_ALERT_TAGS);
