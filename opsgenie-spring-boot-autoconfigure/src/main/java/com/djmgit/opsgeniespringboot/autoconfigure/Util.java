@@ -7,6 +7,9 @@ import static com.djmgit.opsgeniespringboot.opsgenieinterceptor.OpsgenieConfigPa
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Util {
     
@@ -31,8 +34,18 @@ public class Util {
             return;
         }
 
-        ArrayList<String> propertyValList = new ArrayList<String>(Arrays.asList(propertyValString.trim().split(",")));
+        List<String> propertyValList = new ArrayList<String>(Arrays.asList(propertyValString.trim().split(",")).stream().map(obj -> obj.trim())
+                                                                                                   .collect(Collectors.toList()));
         opsgenieConfig.put(propertyKey, propertyValList);
+    }
+
+    private void stringToHashMapTransformerPopulator(OpsgenieConfig opsgenieConfig, String propertyVaString, String propertyKey) {
+        if (propertyVaString == null) {
+            return;
+        }
+
+        HashMap<String, String> details = new HashMap<String,String>();
+
     }
 
     public OpsgenieConfig getOpsgeneiConfig() {
