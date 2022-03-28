@@ -24,13 +24,7 @@ public class RequestInterceptorAutoconfiguration {
     @Bean
     @ConditionalOnMissingBean
     public OpsgenieConfig opsgenieConfig() {
-        String opsgenieApiKey = this.opsgenieProperties.getOpsgenieApiKey() == null ? System.getProperty(OPSGENIE_API_KEY) : this.opsgenieProperties.getOpsgenieApiKey();
-        String opsgenieApiBase = this.opsgenieProperties.getOpsgenieApiBase() == null ? "https://api.opsgenie.com" : this.opsgenieProperties.getOpsgenieApiBase();
-
-        OpsgenieConfig opsgenieConfig = new OpsgenieConfig();
-        opsgenieConfig.put(OPSGENIE_API_KEY, opsgenieApiKey);
-        opsgenieConfig.put(OPSGENIE_API_BASE, opsgenieApiBase);
-
+        OpsgenieConfig opsgenieConfig = new Util(this.opsgenieProperties).getOpsgeneiConfig();
         return opsgenieConfig;
     }
 
