@@ -1,17 +1,7 @@
 package com.djmgit.opsgeniespringboot.autoconfigure;
 
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.OpsgenieConfig;
-import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieAlertPriorities;
-
 import static com.djmgit.opsgeniespringboot.opsgenieinterceptor.OpsgenieConfigParams.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 public class Util {
     
     private OpsgenieProperties opsgenieProperties;
@@ -30,39 +20,6 @@ public class Util {
         this.opsgenieProperties = opsgenieProperties;
     }
 
-    private void stringToArraylistTransformerPopulator(OpsgenieConfig opsgenieConfig, String propertyValString, String propertyKey) {
-        if (propertyValString == null) {
-            return;
-        }
-
-        List<String> propertyValList = new ArrayList<String>(Arrays.asList(propertyValString.trim().split(",")).stream().map(obj -> obj.trim())
-                                                                                                   .collect(Collectors.toList()));
-        opsgenieConfig.put(propertyKey, propertyValList);
-    }
-
-    private void stringToHashMapTransformerPopulator(OpsgenieConfig opsgenieConfig, String propertyVaString, String propertyKey) {
-        if (propertyVaString == null) {
-            return;
-        }
-
-        HashMap<String, String> details = new HashMap<String,String>();
-        Arrays.asList(propertyVaString.trim().split(",")).stream().map(obj -> obj.trim())
-                                                         .collect(Collectors.toList())
-                                                         .forEach((e) -> {
-                                                             details.put(e.split(":")[0].trim(), e.split(":")[1].trim());
-                                                         });
-        opsgenieConfig.put(propertyKey, details);
-    }
-
-    private void populateInitialDetails(OpsgenieConfig opsgenieConfig) {
-        Object details = opsgenieConfig.get(OPSGENIE_ALERT_DETAILS);
-        if (details == null) {
-            details = new HashMap<String, String>();
-        } else {
-            details = (HashMap<String, String>)details;
-        }
-    }
-
     public OpsgenieConfig getOpsgeneiConfig() {
         OpsgenieConfig opsgenieConfig = new OpsgenieConfig();
 
@@ -70,23 +27,21 @@ public class Util {
         opsgenieConfig.put(OPSGENIE_API_KEY, opsgenieApiKey);
         String opsgenieApiBase = this.opsgenieProperties.getOpsgenieApiBase() == null ? "https://api.opsgenie.com" : this.opsgenieProperties.getOpsgenieApiBase();
         opsgenieConfig.put(OPSGENIE_API_BASE, opsgenieApiBase);
-        this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getAlertStatusCodes(), OPSGENIE_ALERT_STATUS_CODES);
-        this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getAlertStatusClasses(), OPSGENIE_ALERT_STATUS_CLASSES);
-        this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getMonitoredEndpoints(), OPSGENIE_MONITORED_ENDPOINTS);
-        this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getIgnoredEndpoints(), OPSGENIE_IGNORED_ENDPOINTS);
-        this.stringToHashMapTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getAlertDetails(), OPSGENIE_ALERT_DETAILS);
-        this.stringToHashMapTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getResponder(), OPSGENIE_RESPONDER);
+        opsgenieConfig.put(OPSGENIE_ALERT_STATUS_CODES, this.opsgenieProperties.getAlertStatusCodes());
+        opsgenieConfig.put(OPSGENIE_ALERT_STATUS_CLASSES, this.opsgenieProperties.getAlertStatusClasses());
+        opsgenieConfig.put(OPSGENIE_MONITORED_ENDPOINTS, this.opsgenieProperties.getMonitoredEndpoints());
+        opsgenieConfig.put(OPSGENIE_IGNORED_ENDPOINTS, this.opsgenieProperties.getIgnoredEndpoints());
+        opsgenieConfig.put(OPSGENIE_ALERT_DETAILS, this.opsgenieProperties.getAlertDetails());
+        opsgenieConfig.put(OPSGENIE_RESPONDER, this.opsgenieProperties.getResponder());
         opsgenieConfig.put(OPSGENIE_THRESHOLD_RESPONSE_TIME ,this.opsgenieProperties.getThresholdResponseTime());
-        this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getResponseTimeMonitoredEndpoints(), OPSGENIE_RESPONSE_TIME_MONITORED_ENDPOINTS);
-        this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getAlertTags(), OPSGENIE_ALERT_TAGS);
-        opsgenieConfig.put(OPSGENIE_ALERT_PRIORITY, this.opsgenieProperties.getAlertPriority() == null ?
-                                                    OpsgenieAlertPriorities.P4:
-                                                    OpsgenieAlertPriorities.valueOf(this.opsgenieProperties.getAlertPriority()));
-        opsgenieConfig.put(OPSGENIE_ALERT_ALIAS, this.opsgenieProperties.getAlertAlias() == null ? "" : this.opsgenieProperties.getAlertAlias());
-        opsgenieConfig.put(OPSGENIE_ALERT_STATUS_ALIAS, this.opsgenieProperties.getAlertAlias() == null ? "" : this.opsgenieProperties.getAlertAlias());
-        opsgenieConfig.put(OPSGENIE_ALERT_LATENCY_ALIAS, this.opsgenieProperties.getAlertLatencyAlias() == null ? "" : this.opsgenieProperties.getAlertLatencyAlias());
-        opsgenieConfig.put(OPSGENIE_ALERT_EXCEPTION_ALIAS, this.opsgenieProperties.getAlertExceptionAlias() == null ? "" : this.opsgenieProperties.getAlertExceptionAlias());
-        opsgenieConfig.put(OPSGENIE_SERVICE_ID, this.opsgenieProperties.getServiceId() == null ? "" : this.opsgenieProperties.getServiceId());
+        opsgenieConfig.put(OPSGENIE_RESPONSE_TIME_MONITORED_ENDPOINTS, this.opsgenieProperties.getResponseTimeMonitoredEndpoints());
+        opsgenieConfig.put(OPSGENIE_ALERT_TAGS, this.opsgenieProperties.getAlertTags());
+        opsgenieConfig.put(OPSGENIE_ALERT_PRIORITY, this.opsgenieProperties.getAlertPriority());
+        opsgenieConfig.put(OPSGENIE_ALERT_ALIAS, this.opsgenieProperties.getAlertAlias());
+        opsgenieConfig.put(OPSGENIE_ALERT_STATUS_ALIAS, this.opsgenieProperties.getAlertAlias());
+        opsgenieConfig.put(OPSGENIE_ALERT_LATENCY_ALIAS, this.opsgenieProperties.getAlertLatencyAlias());
+        opsgenieConfig.put(OPSGENIE_ALERT_EXCEPTION_ALIAS, this.opsgenieProperties.getAlertExceptionAlias());
+        opsgenieConfig.put(OPSGENIE_SERVICE_ID, this.opsgenieProperties.getServiceId());
 
         return opsgenieConfig;
     }
