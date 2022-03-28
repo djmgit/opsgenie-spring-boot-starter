@@ -54,6 +54,15 @@ public class Util {
         opsgenieConfig.put(propertyKey, details);
     }
 
+    private void populateInitialDetails(OpsgenieConfig opsgenieConfig) {
+        Object details = opsgenieConfig.get(OPSGENIE_ALERT_DETAILS);
+        if (details == null) {
+            details = new HashMap<String, String>();
+        } else {
+            details = (HashMap<String, String>)details;
+        }
+    }
+
     public OpsgenieConfig getOpsgeneiConfig() {
         OpsgenieConfig opsgenieConfig = new OpsgenieConfig();
 
@@ -70,12 +79,14 @@ public class Util {
         opsgenieConfig.put(OPSGENIE_THRESHOLD_RESPONSE_TIME ,this.opsgenieProperties.getThresholdResponseTime());
         this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getResponseTimeMonitoredEndpoints(), OPSGENIE_RESPONSE_TIME_MONITORED_ENDPOINTS);
         this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getAlertTags(), OPSGENIE_ALERT_TAGS);
-        opsgenieConfig.put(OPSGENIE_ALERT_PRIORITY, OpsgenieAlertPriorities.valueOf(this.opsgenieProperties.getAlertPriority()));
-        opsgenieConfig.put(OPSGENIE_ALERT_ALIAS, this.opsgenieProperties.getAlertAlias());
-        opsgenieConfig.put(OPSGENIE_ALERT_STATUS_ALIAS, this.opsgenieProperties.getAlertAlias());
-        opsgenieConfig.put(OPSGENIE_ALERT_LATENCY_ALIAS, this.opsgenieProperties.getAlertLatencyAlias());
-        opsgenieConfig.put(OPSGENIE_ALERT_EXCEPTION_ALIAS, this.opsgenieProperties.getAlertExceptionAlias());
-        opsgenieConfig.put(OPSGENIE_SERVICE_ID, this.opsgenieProperties.getServiceId());
+        opsgenieConfig.put(OPSGENIE_ALERT_PRIORITY, this.opsgenieProperties.getAlertPriority() == null ?
+                                                    OpsgenieAlertPriorities.P4:
+                                                    OpsgenieAlertPriorities.valueOf(this.opsgenieProperties.getAlertPriority()));
+        opsgenieConfig.put(OPSGENIE_ALERT_ALIAS, this.opsgenieProperties.getAlertAlias() == null ? "" : this.opsgenieProperties.getAlertAlias());
+        opsgenieConfig.put(OPSGENIE_ALERT_STATUS_ALIAS, this.opsgenieProperties.getAlertAlias() == null ? "" : this.opsgenieProperties.getAlertAlias());
+        opsgenieConfig.put(OPSGENIE_ALERT_LATENCY_ALIAS, this.opsgenieProperties.getAlertLatencyAlias() == null ? "" : this.opsgenieProperties.getAlertLatencyAlias());
+        opsgenieConfig.put(OPSGENIE_ALERT_EXCEPTION_ALIAS, this.opsgenieProperties.getAlertExceptionAlias() == null ? "" : this.opsgenieProperties.getAlertExceptionAlias());
+        opsgenieConfig.put(OPSGENIE_SERVICE_ID, this.opsgenieProperties.getServiceId() == null ? "" : this.opsgenieProperties.getServiceId());
 
         return opsgenieConfig;
     }
