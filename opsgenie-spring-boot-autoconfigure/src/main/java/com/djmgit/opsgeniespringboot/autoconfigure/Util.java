@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Util {
@@ -45,7 +46,12 @@ public class Util {
         }
 
         HashMap<String, String> details = new HashMap<String,String>();
-
+        Arrays.asList(propertyVaString.trim().split(",")).stream().map(obj -> obj.trim())
+                                                         .collect(Collectors.toList())
+                                                         .forEach((e) -> {
+                                                             details.put(e.split(":")[0], e.split(":")[1]);
+                                                         });
+        opsgenieConfig.put(propertyKey, details);
     }
 
     public OpsgenieConfig getOpsgeneiConfig() {
@@ -59,6 +65,7 @@ public class Util {
         this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getAlertStatusClasses(), OPSGENIE_ALERT_STATUS_CLASSES);
         this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getMonitoredEndpoints(), OPSGENIE_MONITORED_ENDPOINTS);
         this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getIgnoredEndpoints(), OPSGENIE_IGNORED_ENDPOINTS);
+        this.stringToHashMapTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getAlertDetails(), OPSGENIE_ALERT_DETAILS);
         opsgenieConfig.put(OPSGENIE_THRESHOLD_RESPONSE_TIME ,this.opsgenieProperties.getThresholdResponseTime());
         this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getResponseTimeMonitoredEndpoints(), OPSGENIE_RESPONSE_TIME_MONITORED_ENDPOINTS);
         this.stringToArraylistTransformerPopulator(opsgenieConfig, this.opsgenieProperties.getAlertTags(), OPSGENIE_ALERT_TAGS);
