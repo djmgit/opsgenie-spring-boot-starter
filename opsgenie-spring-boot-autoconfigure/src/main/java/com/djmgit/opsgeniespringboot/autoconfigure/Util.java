@@ -49,7 +49,7 @@ public class Util {
         Arrays.asList(propertyVaString.trim().split(",")).stream().map(obj -> obj.trim())
                                                          .collect(Collectors.toList())
                                                          .forEach((e) -> {
-                                                             details.put(e.split(":")[0], e.split(":")[1]);
+                                                             details.put(e.split(":")[0].trim(), e.split(":")[1].trim());
                                                          });
         opsgenieConfig.put(propertyKey, details);
     }
