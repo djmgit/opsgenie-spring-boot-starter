@@ -215,6 +215,16 @@ public class ParsedOpsgenieConfig {
         return Integer.parseInt(propertyValString);
     }
 
+    private OpsgenieAlertPriorities parseAlertPriority(String propertyValString) {
+
+        try {
+            return OpsgenieAlertPriorities.valueOf(propertyValString);
+        }
+        catch (IllegalArgumentException e) {
+            return OpsgenieAlertPriorities.P4;
+        }
+    }
+
 
     public static ParsedOpsgenieConfig parseRawConfig(OpsgenieConfig opsgenieConfig) {
 
@@ -230,6 +240,12 @@ public class ParsedOpsgenieConfig {
         parsedOpsgenieConfig.setResponseTimeMonitoredEndpoints(parsedOpsgenieConfig.stringToArraylistTransformerPopulator(opsgenieConfig.getProperty(OPSGENIE_RESPONSE_TIME_MONITORED_ENDPOINTS)));
         parsedOpsgenieConfig.setAlertTags(parsedOpsgenieConfig.stringToArraylistTransformerPopulator(opsgenieConfig.getProperty(OPSGENIE_ALERT_TAGS)));
         parsedOpsgenieConfig.setAlertDetails(parsedOpsgenieConfig.stringToHashMapTransformerPopulator(opsgenieConfig.getProperty(OPSGENIE_ALERT_DETAILS)));
+        parsedOpsgenieConfig.setAlertPriority(parsedOpsgenieConfig.parseAlertPriority(opsgenieConfig.getProperty(OPSGENIE_ALERT_PRIORITY)));
+        parsedOpsgenieConfig.setAlertAlias(opsgenieConfig.getProperty(OPSGENIE_ALERT_ALIAS));
+        parsedOpsgenieConfig.setAlertStatusAlias(opsgenieConfig.getProperty(OPSGENIE_ALERT_STATUS_ALIAS));
+        parsedOpsgenieConfig.setAlertLatencyAlias(opsgenieConfig.getProperty(OPSGENIE_ALERT_LATENCY_ALIAS));
+        parsedOpsgenieConfig.setAlertExceptionAlias(opsgenieConfig.getProperty(OPSGENIE_ALERT_EXCEPTION_ALIAS));
+
 
 
 
