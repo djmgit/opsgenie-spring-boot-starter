@@ -3,6 +3,7 @@ package com.djmgit.opsgeniespringboot.opsgenieinterceptor;
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.OpsgenieConfig;
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieAlertPriorities;
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieResponder;
+import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieResponderTypes;
 
 import static com.djmgit.opsgeniespringboot.opsgenieinterceptor.OpsgenieConfigParams.*;
 
@@ -219,10 +220,30 @@ public class ParsedOpsgenieConfig {
 
         try {
             return OpsgenieAlertPriorities.valueOf(propertyValString);
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return OpsgenieAlertPriorities.P4;
         }
+    }
+
+    private OpsgenieResponderTypes parseOpsgenieResponderType(String propertyValString) {
+
+        try {
+            return OpsgenieResponderTypes.valueOf(propertyValString);
+        } catch (IllegalArgumentException e) {
+            return OpsgenieResponderTypes.team;
+        }
+    }
+
+    private ArrayList<OpsgenieResponder> parseOpsgenieAlertResponders(String propertyValString) {
+
+        ArrayList<OpsgenieResponder> opsgenieResponders = new ArrayList<OpsgenieResponder>();
+        this.stringToArraylistTransformerPopulator(propertyValString).forEach((e) -> {
+            String responderId = e.split(":")[0].trim();
+            OpsgenieResponderTypes responderType = this.parseOpsgenieResponderType(e.split(":")[1].trim());
+            opsgenieResponders.add(new OpsgenieResponder(responderId, responderType));
+        });
+
+        return opsgenieResponders;
     }
 
 
@@ -245,9 +266,8 @@ public class ParsedOpsgenieConfig {
         parsedOpsgenieConfig.setAlertStatusAlias(opsgenieConfig.getProperty(OPSGENIE_ALERT_STATUS_ALIAS));
         parsedOpsgenieConfig.setAlertLatencyAlias(opsgenieConfig.getProperty(OPSGENIE_ALERT_LATENCY_ALIAS));
         parsedOpsgenieConfig.setAlertExceptionAlias(opsgenieConfig.getProperty(OPSGENIE_ALERT_EXCEPTION_ALIAS));
-
-
-
+        parsedOpsgenieConfig.setResponders(parsedOpsgenieConfig.parseOpsgenieAlertResponders(opsgenieConfig.getProperty(OPSGENIE_RESPONDER)));
+        parsedOpsgenieConfig.setServiceId(opsgenieConfig.getProperty(OPSGENIE_SERVICE_ID));
 
         return parsedOpsgenieConfig;
     }
