@@ -187,8 +187,8 @@ public class ParsedOpsgenieConfig {
         this.serviceId = serviceId;
     }
 
-    private List<String> stringToArraylistTransformerPopulator(String propertyValString) {
-        List<String> propertyValList = new ArrayList<String>(Arrays.asList(propertyValString.trim().split(",")).stream().map(obj -> obj.trim())
+    private ArrayList<String> stringToArraylistTransformerPopulator(String propertyValString) {
+        ArrayList<String> propertyValList = new ArrayList<String>(Arrays.asList(propertyValString.trim().split(",")).stream().map(obj -> obj.trim())
                                                                                                    .collect(Collectors.toList()));
         return propertyValList;
     }
@@ -203,18 +203,35 @@ public class ParsedOpsgenieConfig {
         return details;
     }
 
-    private List<Integer> parseAlertStatusCodes(String propertyValString) {
+    private ArrayList<Integer> parseAlertStatusCodes(String propertyValString) {
 
-        List<Integer> propertyValList = new ArrayList<Integer>(this.stringToArraylistTransformerPopulator(propertyValString).stream()
+        ArrayList<Integer> propertyValList = new ArrayList<Integer>(this.stringToArraylistTransformerPopulator(propertyValString).stream()
                                                                                                                             .map(obj -> Integer.parseInt(obj))
                                                                                                                             .collect(Collectors.toList()));
         return propertyValList;
+    }
+
+    private int parseThresholdResponseTime(String propertyValString) {
+        return Integer.parseInt(propertyValString);
     }
 
 
     public static ParsedOpsgenieConfig parseRawConfig(OpsgenieConfig opsgenieConfig) {
 
         ParsedOpsgenieConfig parsedOpsgenieConfig = new ParsedOpsgenieConfig();
+
+        parsedOpsgenieConfig.setOpsgenieApiKey(opsgenieConfig.getProperty(OPSGENIE_API_KEY));
+        parsedOpsgenieConfig.setOpsgenieApiBase(opsgenieConfig.getProperty(OPSGENIE_API_BASE));
+        parsedOpsgenieConfig.setAlertStatusCodes(parsedOpsgenieConfig.parseAlertStatusCodes(opsgenieConfig.getProperty(OPSGENIE_ALERT_STATUS_CODES)));
+        parsedOpsgenieConfig.setAlertStatusClasses(parsedOpsgenieConfig.stringToArraylistTransformerPopulator(opsgenieConfig.getProperty(OPSGENIE_ALERT_STATUS_CLASSES)));
+        parsedOpsgenieConfig.setMonitoredEndpoints(parsedOpsgenieConfig.stringToArraylistTransformerPopulator(opsgenieConfig.getProperty(OPSGENIE_MONITORED_ENDPOINTS)));
+        parsedOpsgenieConfig.setIgnoredEndpoints(parsedOpsgenieConfig.stringToArraylistTransformerPopulator(opsgenieConfig.getProperty(OPSGENIE_IGNORED_ENDPOINTS)));
+        parsedOpsgenieConfig.setThresholdResponseTime(parsedOpsgenieConfig.parseThresholdResponseTime(opsgenieConfig.getProperty((OPSGENIE_THRESHOLD_RESPONSE_TIME))));
+        parsedOpsgenieConfig.setResponseTimeMonitoredEndpoints(parsedOpsgenieConfig.stringToArraylistTransformerPopulator(opsgenieConfig.getProperty(OPSGENIE_RESPONSE_TIME_MONITORED_ENDPOINTS)));
+        parsedOpsgenieConfig.setAlertTags(parsedOpsgenieConfig.stringToArraylistTransformerPopulator(opsgenieConfig.getProperty(OPSGENIE_ALERT_TAGS)));
+        parsedOpsgenieConfig.setAlertDetails(parsedOpsgenieConfig.stringToHashMapTransformerPopulator(opsgenieConfig.getProperty(OPSGENIE_ALERT_DETAILS)));
+
+
 
         return parsedOpsgenieConfig;
     }
