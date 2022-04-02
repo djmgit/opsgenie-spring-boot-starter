@@ -15,11 +15,17 @@ import org.springframework.web.client.RestTemplate;
 public class Opsgenie {
     
     private OpsgenieConfig opsgenieConfig;
+    private ParsedOpsgenieConfig parsedOpsgenieConfig;
 
     public Opsgenie() {}
 
     public Opsgenie(OpsgenieConfig opsgenieConfig) {
         this.opsgenieConfig = opsgenieConfig;
+        this.parsedOpsgenieConfig = ParsedOpsgenieConfig.parseRawConfig(opsgenieConfig);
+    }
+
+    public ParsedOpsgenieConfig getOpsgenieConfig() {
+        return this.parsedOpsgenieConfig;
     }
 
     public void raiseOpsgenieStatusAlert(String alertStatusCode, String alertStatusClass) {
