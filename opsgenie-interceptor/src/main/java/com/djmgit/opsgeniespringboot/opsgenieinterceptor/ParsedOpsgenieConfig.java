@@ -44,6 +44,13 @@ public class ParsedOpsgenieConfig {
     private ArrayList<String> alertTags;
     private HashMap<String, String> alertDetails;
     private OpsgenieAlertPriorities alertPriority;
+    private String alertAlias;
+    private String alertStatusAlias;
+    private String alertLatencyAlias;
+    private String alertExceptionAlias;
+    private ArrayList<OpsgenieResponder> responders;
+    private String serviceId; 
+
     public String getOpsgenieApiKey() {
         return opsgenieApiKey;
     }
@@ -180,20 +187,13 @@ public class ParsedOpsgenieConfig {
         this.serviceId = serviceId;
     }
 
-    private String alertAlias;
-    private String alertStatusAlias;
-    private String alertLatencyAlias;
-    private String alertExceptionAlias;
-    private ArrayList<OpsgenieResponder> responders;
-    private String serviceId; 
-
-    private List<String> stringToArraylistTransformerPopulator(OpsgenieConfig opsgenieConfig) {
+    private List<String> stringToArraylistTransformerPopulator(String propertyValString) {
         List<String> propertyValList = new ArrayList<String>(Arrays.asList(propertyValString.trim().split(",")).stream().map(obj -> obj.trim())
                                                                                                    .collect(Collectors.toList()));
         return propertyValList;
     }
 
-    private HashMap<String, String> stringToHashMapTransformerPopulator(OpsgenieConfig opsgenieConfig, String propertyVaString, String propertyKey) {
+    private HashMap<String, String> stringToHashMapTransformerPopulator(String propertyVaString) {
         HashMap<String, String> details = new HashMap<String,String>();
         Arrays.asList(propertyVaString.trim().split(",")).stream().map(obj -> obj.trim())
                                                          .collect(Collectors.toList())
@@ -201,5 +201,21 @@ public class ParsedOpsgenieConfig {
                                                              details.put(e.split(":")[0].trim(), e.split(":")[1].trim());
                                                          });
         return details;
+    }
+
+    private List<Integer> parseAlertStatusCodes(String propertyValString) {
+
+        List<Integer> propertyValList = new ArrayList<Integer>(this.stringToArraylistTransformerPopulator(propertyValString).stream()
+                                                                                                                            .map(obj -> Integer.parseInt(obj))
+                                                                                                                            .collect(Collectors.toList()));
+        return propertyValList;
+    }
+
+
+    public static ParsedOpsgenieConfig parseRawConfig(OpsgenieConfig opsgenieConfig) {
+
+        ParsedOpsgenieConfig parsedOpsgenieConfig = new ParsedOpsgenieConfig();
+
+        return parsedOpsgenieConfig;
     }
 }
