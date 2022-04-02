@@ -7,6 +7,8 @@ import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieResponde
 
 import static com.djmgit.opsgeniespringboot.opsgenieinterceptor.OpsgenieConfigParams.*;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -50,7 +52,8 @@ public class ParsedOpsgenieConfig {
     private String alertLatencyAlias;
     private String alertExceptionAlias;
     private ArrayList<OpsgenieResponder> responders;
-    private String serviceId; 
+    private String serviceId;
+    private String host;
 
     public String getOpsgenieApiKey() {
         return opsgenieApiKey;
@@ -188,6 +191,14 @@ public class ParsedOpsgenieConfig {
         this.serviceId = serviceId;
     }
 
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
     private ArrayList<String> stringToArraylistTransformerPopulator(String propertyValString) {
         ArrayList<String> propertyValList = new ArrayList<String>(Arrays.asList(propertyValString.trim().split(",")).stream().map(obj -> obj.trim())
                                                                                                    .collect(Collectors.toList()));
@@ -246,6 +257,14 @@ public class ParsedOpsgenieConfig {
         return opsgenieResponders;
     }
 
+    private String getHostName() {
+        try {
+            return InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            return "";
+        }
+    }
+
 
     public static ParsedOpsgenieConfig parseRawConfig(OpsgenieConfig opsgenieConfig) {
 
@@ -268,6 +287,7 @@ public class ParsedOpsgenieConfig {
         parsedOpsgenieConfig.setAlertExceptionAlias(opsgenieConfig.getProperty(OPSGENIE_ALERT_EXCEPTION_ALIAS));
         parsedOpsgenieConfig.setResponders(parsedOpsgenieConfig.parseOpsgenieAlertResponders(opsgenieConfig.getProperty(OPSGENIE_RESPONDER)));
         parsedOpsgenieConfig.setServiceId(opsgenieConfig.getProperty(OPSGENIE_SERVICE_ID));
+        parsedOpsgenieConfig.setHost(parsedOpsgenieConfig.getHost());
 
         return parsedOpsgenieConfig;
     }
