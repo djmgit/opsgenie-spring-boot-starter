@@ -28,6 +28,10 @@ public class Opsgenie {
         return this.parsedOpsgenieConfig;
     }
 
+    public String getResponseStatusClass(int statusCode) {
+        return (statusCode / 100) + "XX";
+    }
+
     public void raiseOpsgenieStatusAlert(String alertStatusCode, String alertStatusClass) {
 
         OpsgenieAlert alertPayload = new OpsgenieAlert();
