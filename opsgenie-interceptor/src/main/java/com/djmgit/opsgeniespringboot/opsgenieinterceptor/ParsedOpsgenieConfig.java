@@ -287,7 +287,7 @@ public class ParsedOpsgenieConfig {
         parsedOpsgenieConfig.setAlertExceptionAlias(opsgenieConfig.getProperty(OPSGENIE_ALERT_EXCEPTION_ALIAS));
         parsedOpsgenieConfig.setResponders(parsedOpsgenieConfig.parseOpsgenieAlertResponders(opsgenieConfig.getProperty(OPSGENIE_RESPONDER)));
         parsedOpsgenieConfig.setServiceId(opsgenieConfig.getProperty(OPSGENIE_SERVICE_ID));
-        parsedOpsgenieConfig.setHost(parsedOpsgenieConfig.getHost());
+        parsedOpsgenieConfig.setHost(parsedOpsgenieConfig.getHostName());
 
         return parsedOpsgenieConfig;
     }
