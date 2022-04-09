@@ -36,24 +36,24 @@ public class ParsedOpsgenieConfig {
     }
     */
 
-    private String opsgenieApiKey;
-    private String opsgenieApiBase;
-    private ArrayList<Integer> alertStatusCodes;
-    private ArrayList<String> alertStatusClasses;
-    private ArrayList<String> monitoredEndpoints;
-    private ArrayList<String> ignoredEndpoints;
-    private int thresholdResponseTime;
-    private ArrayList<String> responseTimeMonitoredEndpoints;
-    private ArrayList<String> alertTags;
-    private HashMap<String, String> alertDetails;
-    private OpsgenieAlertPriorities alertPriority;
-    private String alertAlias;
-    private String alertStatusAlias;
-    private String alertLatencyAlias;
-    private String alertExceptionAlias;
-    private ArrayList<OpsgenieResponder> responders;
-    private String serviceId;
-    private String host;
+    private String opsgenieApiKey = "";
+    private String opsgenieApiBase = "";
+    private ArrayList<Integer> alertStatusCodes = null;
+    private ArrayList<String> alertStatusClasses = null;
+    private ArrayList<String> monitoredEndpoints = null;
+    private ArrayList<String> ignoredEndpoints = null;
+    private int thresholdResponseTime = -1;
+    private ArrayList<String> responseTimeMonitoredEndpoints = null;
+    private ArrayList<String> alertTags = null;
+    private HashMap<String, String> alertDetails = null;
+    private OpsgenieAlertPriorities alertPriority = null;
+    private String alertAlias = "";
+    private String alertStatusAlias = "";
+    private String alertLatencyAlias = "";
+    private String alertExceptionAlias = "";
+    private ArrayList<OpsgenieResponder> responders = null;
+    private String serviceId = "";
+    private String host = "";
 
     public String getOpsgenieApiKey() {
         return opsgenieApiKey;
