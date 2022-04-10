@@ -43,6 +43,13 @@ public class RequestInterceptor implements HandlerInterceptor {
                     }
             }
         }
+
+        if ((this.opsgenie.getOpsgenieConfig().getThresholdResponseTime() != -1) && (this.opsgenie.getOpsgenieConfig().getResponseTimeMonitoredEndpoints() != null) &&
+                (this.opsgenie.isPathPresent(endpoint, this.opsgenie.getOpsgenieConfig().getResponseTimeMonitoredEndpoints())) &&
+                (elapsedTime > this.opsgenie.getOpsgenieConfig().getThresholdResponseTime())) {
+
+                    // raise alert for response latency breach
+        }
         
         //System.out.println("Post Handle method is Calling");
         //System.out.println("Sending test alert ...");
