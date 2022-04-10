@@ -32,7 +32,16 @@ public class RequestInterceptor implements HandlerInterceptor {
 
         if (((this.opsgenie.getOpsgenieConfig().getAlertStatusCodes() != null) && (this.opsgenie.getOpsgenieConfig().getAlertStatusCodes().contains(statusCode))) ||
                 ((this.opsgenie.getOpsgenieConfig().getAlertStatusClasses() != null) && (this.opsgenie.getOpsgenieConfig().getAlertStatusClasses().contains(statusClass)))) {
-                    
+            if (((this.opsgenie.getOpsgenieConfig().getMonitoredEndpoints() != null) && (this.opsgenie.isPathPresent(endpoint, this.opsgenie.getOpsgenieConfig().getMonitoredEndpoints()))) ||
+                ((this.opsgenie.getOpsgenieConfig().getMonitoredEndpoints() == null) && !((this.opsgenie.getOpsgenieConfig().getIgnoredEndpoints() != null) && (this.opsgenie.isPathPresent(endpoint, this.opsgenie.getOpsgenieConfig().getIgnoredEndpoints()))))) {
+                    if ((this.opsgenie.getOpsgenieConfig().getAlertStatusCodes() != null) && (this.opsgenie.getOpsgenieConfig().getAlertStatusCodes().contains(statusCode))) {
+
+                        // raise alert for unwanted status code
+                    } else if ((this.opsgenie.getOpsgenieConfig().getAlertStatusClasses() != null) && (this.opsgenie.getOpsgenieConfig().getAlertStatusClasses().contains(statusClass))) {
+
+                        // rasie alert for unwanted status class
+                    }
+            }
         }
         
         //System.out.println("Post Handle method is Calling");
