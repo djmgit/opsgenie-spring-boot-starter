@@ -4,6 +4,8 @@ import static com.djmgit.opsgeniespringboot.opsgenieinterceptor.OpsgenieConfigPa
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieAlert;
 
@@ -30,6 +32,10 @@ public class Opsgenie {
 
     public String getResponseStatusClass(int statusCode) {
         return (statusCode / 100) + "XX";
+    }
+
+    public boolean isPathPresent(String endpoint, ArrayList<String> endpointPatterns) {
+       return endpointPatterns.stream().filter(pattern -> Pattern.matches(pattern, endpoint)).findFirst().isPresent();
     }
 
     public void raiseOpsgenieStatusAlert(String alertStatusCode, String alertStatusClass) {

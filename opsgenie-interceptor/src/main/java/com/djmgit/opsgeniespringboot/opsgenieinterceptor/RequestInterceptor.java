@@ -28,6 +28,12 @@ public class RequestInterceptor implements HandlerInterceptor {
         long elapsedTime = System.currentTimeMillis() - (long)request.getAttribute("requestStartTime");
         int statusCode = response.getStatus();
         String statusClass = this.opsgenie.getResponseStatusClass(statusCode);
+        String endpoint = request.getRequestURI();
+
+        if (((this.opsgenie.getOpsgenieConfig().getAlertStatusCodes() != null) && (this.opsgenie.getOpsgenieConfig().getAlertStatusCodes().contains(statusCode))) ||
+                ((this.opsgenie.getOpsgenieConfig().getAlertStatusClasses() != null) && (this.opsgenie.getOpsgenieConfig().getAlertStatusClasses().contains(statusClass)))) {
+                    
+        }
         
         //System.out.println("Post Handle method is Calling");
         //System.out.println("Sending test alert ...");
