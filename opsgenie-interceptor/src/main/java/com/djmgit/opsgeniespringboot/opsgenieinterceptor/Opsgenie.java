@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieAlert;
+import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieAlertType;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -55,6 +56,26 @@ public class Opsgenie {
 
         System.out.println(response);
 
+    }
+
+    public void raiseOpsgenieLatencyAlert(int elapsedTime, int alertStatusCode) {
+
+        // implement response latency threshold alert
+    }
+
+    public void raiseOpsgenieAlert(OpsgenieAlertType alertType, int alertStatusCode) {
+
+        // implement alert on response status code
+    }
+
+    public void raiseOpsgenieAlert(OpsgenieAlertType alertType, int alertStatusCode, String alertStatusClass) {
+
+        // implement alert on response status class
+    }
+
+    public void raiseOpsgenieAlert(OpsgenieAlertType alertType, int alertStatusCode, int elapsedTime) {
+
+        // implement alert on response threshold time
     }
 
     private HttpHeaders getOpsgenieRequestHeaders(String opsgenieApiKey) {
