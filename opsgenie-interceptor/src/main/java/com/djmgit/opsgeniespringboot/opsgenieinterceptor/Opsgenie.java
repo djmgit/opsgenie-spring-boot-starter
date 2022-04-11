@@ -58,6 +58,10 @@ public class Opsgenie {
 //
         //System.out.println(response);
 
+        String endpoint = request.getRequestURI();
+        String url = request.getRequestURL().toString();
+        String method = request.getMethod();
+
         OpsgenieAlert alertPayload = new OpsgenieAlert();
 
     }
