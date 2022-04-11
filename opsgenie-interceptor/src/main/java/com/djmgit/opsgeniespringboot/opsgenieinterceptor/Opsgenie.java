@@ -7,6 +7,8 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieAlert;
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieAlertType;
 
@@ -39,41 +41,43 @@ public class Opsgenie {
        return endpointPatterns.stream().filter(pattern -> Pattern.matches(pattern, endpoint)).findFirst().isPresent();
     }
 
-    public void raiseOpsgenieStatusAlert(String alertStatusCode, String alertStatusClass) {
+    public void raiseOpsgenieStatusAlert(HttpServletRequest request, String alertStatusCode, String alertStatusClass) {
+
+        //OpsgenieAlert alertPayload = new OpsgenieAlert();
+        //alertPayload.setMessage("This is a test alert");
+        //alertPayload.setDescription("This is a test descritiption");
+        //String opsgenieApiKey = this.opsgenieConfig.get(OPSGENIE_API_KEY).toString();
+        //String opsgenieAlertEndpoint = String.format("%s/v2/alerts", this.opsgenieConfig.get(OPSGENIE_API_BASE));
+//
+        //ResponseEntity<String> response = null;
+        //try {
+            //response = this.makeOpsgenieApiRequest(opsgenieAlertEndpoint, opsgenieApiKey, alertPayload);
+        //} catch (Exception e) {
+            //System.out.println(e.toString());
+        //}
+//
+        //System.out.println(response);
 
         OpsgenieAlert alertPayload = new OpsgenieAlert();
-        alertPayload.setMessage("This is a test alert");
-        alertPayload.setDescription("This is a test descritiption");
-        String opsgenieApiKey = this.opsgenieConfig.get(OPSGENIE_API_KEY).toString();
-        String opsgenieAlertEndpoint = String.format("%s/v2/alerts", this.opsgenieConfig.get(OPSGENIE_API_BASE));
-
-        ResponseEntity<String> response = null;
-        try {
-            response = this.makeOpsgenieApiRequest(opsgenieAlertEndpoint, opsgenieApiKey, alertPayload);
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
-
-        System.out.println(response);
 
     }
 
-    public void raiseOpsgenieLatencyAlert(int elapsedTime, int alertStatusCode) {
+    public void raiseOpsgenieLatencyAlert(HttpServletRequest request, int elapsedTime, int alertStatusCode) {
 
         // implement response latency threshold alert
     }
 
-    public void raiseOpsgenieAlert(OpsgenieAlertType alertType, int alertStatusCode) {
+    public void raiseOpsgenieAlert(HttpServletRequest request, OpsgenieAlertType alertType, int alertStatusCode) {
 
         // implement alert on response status code
     }
 
-    public void raiseOpsgenieAlert(OpsgenieAlertType alertType, int alertStatusCode, String alertStatusClass) {
+    public void raiseOpsgenieAlert(HttpServletRequest request, OpsgenieAlertType alertType, int alertStatusCode, String alertStatusClass) {
 
         // implement alert on response status class
     }
 
-    public void raiseOpsgenieAlert(OpsgenieAlertType alertType, int alertStatusCode, int elapsedTime) {
+    public void raiseOpsgenieAlert(HttpServletRequest request, OpsgenieAlertType alertType, int alertStatusCode, int elapsedTime) {
 
         // implement alert on response threshold time
     }
