@@ -5,6 +5,7 @@ import static com.djmgit.opsgeniespringboot.opsgenieinterceptor.OpsgenieConfigPa
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,7 @@ public class Opsgenie {
        return endpointPatterns.stream().filter(pattern -> Pattern.matches(pattern, endpoint)).findFirst().isPresent();
     }
 
-    public void raiseOpsgenieStatusAlert(HttpServletRequest request, String alertStatusCode, String alertStatusClass) {
+    public void raiseOpsgenieStatusAlert(HttpServletRequest request, int alertStatusCode, String alertStatusClass) {
 
         //OpsgenieAlert alertPayload = new OpsgenieAlert();
         //alertPayload.setMessage("This is a test alert");
@@ -61,6 +62,21 @@ public class Opsgenie {
         String endpoint = request.getRequestURI();
         String url = request.getRequestURL().toString();
         String method = request.getMethod();
+
+        HashMap<String, String> alertDetails = this.parsedOpsgenieConfig.getAlertDetails();
+        if (alertDetails == null) {
+            alertDetails = new HashMap<String, String>();
+        }
+
+        alertDetails.put("endpoint", endpoint);
+        alertDetails.put("url", url);
+        alertDetails.put("method", method);
+
+        if (alertStatusCode != -1) {
+            alertDetails.put("status_code", "" + alertStatusCode);
+        } else {
+            alertDetails.put("status_class", alertStatusClass);
+        }
 
         OpsgenieAlert alertPayload = new OpsgenieAlert();
 
