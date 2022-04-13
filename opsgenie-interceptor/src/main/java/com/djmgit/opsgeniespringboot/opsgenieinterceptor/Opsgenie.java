@@ -79,7 +79,6 @@ public class Opsgenie {
         }
 
         OpsgenieAlert alertPayload = new OpsgenieAlert();
-
     }
 
     public void raiseOpsgenieLatencyAlert(HttpServletRequest request, int elapsedTime, int alertStatusCode) {

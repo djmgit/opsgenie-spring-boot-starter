@@ -265,6 +265,21 @@ public class ParsedOpsgenieConfig {
         }
     }
 
+    private void populateDefaultDetails() {
+        if (this.alertDetails == null) {
+            this.alertDetails = new HashMap<String, String>();
+        }
+
+        // populate the default values if present
+        if (this.host != "") {
+            this.alertDetails.put("host", this.host);
+        }
+
+        if (this.host != "") {
+            this.alertDetails.put("service_id", this.serviceId);
+        }
+    }
+
 
     public static ParsedOpsgenieConfig parseRawConfig(OpsgenieConfig opsgenieConfig) {
 
@@ -288,6 +303,7 @@ public class ParsedOpsgenieConfig {
         parsedOpsgenieConfig.setResponders(parsedOpsgenieConfig.parseOpsgenieAlertResponders(opsgenieConfig.getProperty(OPSGENIE_RESPONDER)));
         parsedOpsgenieConfig.setServiceId(opsgenieConfig.getProperty(OPSGENIE_SERVICE_ID));
         parsedOpsgenieConfig.setHost(parsedOpsgenieConfig.getHostName());
+        parsedOpsgenieConfig.populateDefaultDetails();
 
         return parsedOpsgenieConfig;
     }
