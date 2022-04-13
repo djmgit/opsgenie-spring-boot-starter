@@ -64,21 +64,22 @@ public class Opsgenie {
         String method = request.getMethod();
 
         HashMap<String, String> alertDetails = this.parsedOpsgenieConfig.getAlertDetails();
-        if (alertDetails == null) {
-            alertDetails = new HashMap<String, String>();
-        }
 
         alertDetails.put("endpoint", endpoint);
         alertDetails.put("url", url);
         alertDetails.put("method", method);
 
-        if (alertStatusCode != -1) {
+        if (alertStatusClass != "") {
             alertDetails.put("status_code", "" + alertStatusCode);
         } else {
             alertDetails.put("status_class", alertStatusClass);
         }
 
         OpsgenieAlert alertPayload = new OpsgenieAlert();
+        String alias = this.parsedOpsgenieConfig.getServiceId() + "-" + endpoint + "-" + alertStatusCode;
+        if (this.parsedOpsgenieConfig.getAlertStatusAlias() != "") {
+            alias = alias + "-" + this.parsedOpsgenieConfig.getAlertStatusAlias();
+        }
     }
 
     public void raiseOpsgenieLatencyAlert(HttpServletRequest request, int elapsedTime, int alertStatusCode) {
