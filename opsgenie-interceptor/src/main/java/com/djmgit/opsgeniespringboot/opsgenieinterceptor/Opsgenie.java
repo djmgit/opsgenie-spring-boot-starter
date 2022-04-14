@@ -92,6 +92,17 @@ public class Opsgenie {
             description = String.format("%s returned status : %d. Complete URL : %s called with method %s. Endpoint served by service : %s on host : %s",
                                          endpoint, alertStatusCode, url, method, this.parsedOpsgenieConfig.getServiceId(), this.parsedOpsgenieConfig.getHost());
         }
+
+        alertPayload.setMessage(summary);
+        alertPayload.setDescription(description);
+        alertPayload.setAlias(alias);
+        alertPayload.setTags(this.parsedOpsgenieConfig.getAlertTags());
+        alertPayload.setDetails(alertDetails);
+        alertPayload.setPriority(this.parsedOpsgenieConfig.getAlertPriority());
+
+        if (this.parsedOpsgenieConfig.getResponders() != null) {
+            alertPayload.setResponders(this.parsedOpsgenieConfig.getResponders());
+        }
     }
 
     public void raiseOpsgenieLatencyAlert(HttpServletRequest request, int elapsedTime, int alertStatusCode) {
