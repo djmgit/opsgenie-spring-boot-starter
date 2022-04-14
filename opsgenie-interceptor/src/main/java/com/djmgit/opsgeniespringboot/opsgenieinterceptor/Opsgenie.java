@@ -62,6 +62,8 @@ public class Opsgenie {
         String endpoint = request.getRequestURI();
         String url = request.getRequestURL().toString();
         String method = request.getMethod();
+        String summary = "";
+        String description = "";
 
         HashMap<String, String> alertDetails = this.parsedOpsgenieConfig.getAlertDetails();
 
@@ -79,6 +81,16 @@ public class Opsgenie {
         String alias = this.parsedOpsgenieConfig.getServiceId() + "-" + endpoint + "-" + alertStatusCode;
         if (this.parsedOpsgenieConfig.getAlertStatusAlias() != "") {
             alias = alias + "-" + this.parsedOpsgenieConfig.getAlertStatusAlias();
+        }
+
+        if (alertStatusClass != "") {
+            summary = String.format("%s returned unaccepted status class : %s | Alert generated from %s", endpoint, alertStatusClass, this.parsedOpsgenieConfig.getServiceId());
+            description = String.format("%s returned status code from class : %s. Complete URL : %s called with method %s. Endpoint served by service : %s on host : %s",
+                                         endpoint, alertStatusClass, url, method, this.parsedOpsgenieConfig.getServiceId(), this.parsedOpsgenieConfig.getHost());
+        } else {
+            summary = String.format("%s returned unaccepted status code : %d | Alert generated from %s", endpoint, alertStatusCode, this.parsedOpsgenieConfig.getServiceId());
+            description = String.format("%s returned status : %d. Complete URL : %s called with method %s. Endpoint served by service : %s on host : %s",
+                                         endpoint, alertStatusCode, url, method, this.parsedOpsgenieConfig.getServiceId(), this.parsedOpsgenieConfig.getHost());
         }
     }
 
