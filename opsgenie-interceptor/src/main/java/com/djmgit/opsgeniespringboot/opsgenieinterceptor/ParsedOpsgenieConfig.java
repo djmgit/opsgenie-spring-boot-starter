@@ -275,8 +275,10 @@ public class ParsedOpsgenieConfig {
             this.alertDetails.put("host", this.host);
         }
 
-        if (this.host != "") {
+        if (this.serviceId != "") {
             this.alertDetails.put("service_id", this.serviceId);
+        } else {
+            this.alertDetails.put("service_id", "Java-SpringBoot-Service")
         }
     }
 
