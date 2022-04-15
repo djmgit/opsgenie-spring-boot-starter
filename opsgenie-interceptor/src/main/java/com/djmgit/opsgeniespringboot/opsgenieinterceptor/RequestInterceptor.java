@@ -3,6 +3,9 @@ package com.djmgit.opsgeniespringboot.opsgenieinterceptor;
 import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieAlertType;
+
 import org.springframework.web.servlet.ModelAndView;
 
 public class RequestInterceptor implements HandlerInterceptor {
@@ -34,11 +37,9 @@ public class RequestInterceptor implements HandlerInterceptor {
             if (((this.opsgenie.getOpsgenieConfig().getMonitoredEndpoints() != null) && (this.opsgenie.isPathPresent(endpoint, this.opsgenie.getOpsgenieConfig().getMonitoredEndpoints()))) ||
                 ((this.opsgenie.getOpsgenieConfig().getMonitoredEndpoints() == null) && !((this.opsgenie.getOpsgenieConfig().getIgnoredEndpoints() != null) && (this.opsgenie.isPathPresent(endpoint, this.opsgenie.getOpsgenieConfig().getIgnoredEndpoints()))))) {
                     if ((this.opsgenie.getOpsgenieConfig().getAlertStatusCodes() != null) && (this.opsgenie.getOpsgenieConfig().getAlertStatusCodes().contains(statusCode))) {
-
-                        // raise alert for unwanted status code
+                        this.opsgenie.raiseOpsgenieAlert(request, OpsgenieAlertType.STATUS_ALERT, statusCode);
                     } else if ((this.opsgenie.getOpsgenieConfig().getAlertStatusClasses() != null) && (this.opsgenie.getOpsgenieConfig().getAlertStatusClasses().contains(statusClass))) {
-
-                        // rasie alert for unwanted status class
+                        this.opsgenie.raiseOpsgenieAlert(request, OpsgenieAlertType.STATUS_ALERT, statusCode, statusClass);
                     }
             }
         }
@@ -46,13 +47,8 @@ public class RequestInterceptor implements HandlerInterceptor {
         if ((this.opsgenie.getOpsgenieConfig().getThresholdResponseTime() != -1) && (this.opsgenie.getOpsgenieConfig().getResponseTimeMonitoredEndpoints() != null) &&
                 (this.opsgenie.isPathPresent(endpoint, this.opsgenie.getOpsgenieConfig().getResponseTimeMonitoredEndpoints())) &&
                 (elapsedTime > this.opsgenie.getOpsgenieConfig().getThresholdResponseTime())) {
-
-                    // raise alert for response latency breach
+                    this.opsgenie.raiseOpsgenieAlert(request, OpsgenieAlertType.LATENCY_ALERT, statusCode, elapsedTime);
         }
-        
-        //System.out.println("Post Handle method is Calling");
-        //System.out.println("Sending test alert ...");
-        //opsgenie.raiseOpsgenieStatusAlert("alertStatusCode", "alertStatusClass");
     }
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception) throws Exception {

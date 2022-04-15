@@ -94,7 +94,7 @@ public class Opsgenie {
         } catch (Exception e) {}
     }
 
-    public void raiseOpsgenieLatencyAlert(HttpServletRequest request, int elapsedTime, int alertStatusCode) {
+    public void raiseOpsgenieLatencyAlert(HttpServletRequest request, long elapsedTime, int alertStatusCode) {
 
         String endpoint = request.getRequestURI();
         String url = request.getRequestURL().toString();
@@ -148,7 +148,7 @@ public class Opsgenie {
         }
     }
 
-    public void raiseOpsgenieAlert(HttpServletRequest request, OpsgenieAlertType alertType, int alertStatusCode, int elapsedTime) {
+    public void raiseOpsgenieAlert(HttpServletRequest request, OpsgenieAlertType alertType, int alertStatusCode, long elapsedTime) {
 
         if (alertType == OpsgenieAlertType.LATENCY_ALERT) {
             this.raiseOpsgenieLatencyAlert(request, elapsedTime, alertStatusCode);
