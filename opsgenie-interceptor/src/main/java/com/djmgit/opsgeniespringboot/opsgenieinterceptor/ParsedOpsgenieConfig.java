@@ -188,7 +188,11 @@ public class ParsedOpsgenieConfig {
     }
 
     public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
+        if ((serviceId != "") && (serviceId != null)) {
+            this.serviceId = serviceId;
+        } else {
+            this.serviceId = "Java-SpringBoot-Service";
+        }
     }
 
     public String getHost() {
@@ -278,7 +282,7 @@ public class ParsedOpsgenieConfig {
         if (this.serviceId != "") {
             this.alertDetails.put("service_id", this.serviceId);
         } else {
-            this.alertDetails.put("service_id", "Java-SpringBoot-Service")
+            this.alertDetails.put("service_id", "Java-SpringBoot-Service");
         }
     }
 

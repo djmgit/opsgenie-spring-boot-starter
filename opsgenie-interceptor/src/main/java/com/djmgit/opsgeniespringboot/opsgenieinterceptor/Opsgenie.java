@@ -44,21 +44,6 @@ public class Opsgenie {
 
     public void raiseOpsgenieStatusAlert(HttpServletRequest request, int alertStatusCode, String alertStatusClass) {
 
-        //OpsgenieAlert alertPayload = new OpsgenieAlert();
-        //alertPayload.setMessage("This is a test alert");
-        //alertPayload.setDescription("This is a test descritiption");
-        //String opsgenieApiKey = this.opsgenieConfig.get(OPSGENIE_API_KEY).toString();
-        //String opsgenieAlertEndpoint = String.format("%s/v2/alerts", this.opsgenieConfig.get(OPSGENIE_API_BASE));
-//
-        //ResponseEntity<String> response = null;
-        //try {
-            //response = this.makeOpsgenieApiRequest(opsgenieAlertEndpoint, opsgenieApiKey, alertPayload);
-        //} catch (Exception e) {
-            //System.out.println(e.toString());
-        //}
-//
-        //System.out.println(response);
-
         String endpoint = request.getRequestURI();
         String url = request.getRequestURL().toString();
         String method = request.getMethod();
@@ -111,7 +96,18 @@ public class Opsgenie {
 
     public void raiseOpsgenieLatencyAlert(HttpServletRequest request, int elapsedTime, int alertStatusCode) {
 
-        // implement response latency threshold alert
+        String endpoint = request.getRequestURI();
+        String url = request.getRequestURL().toString();
+        String method = request.getMethod();
+        String summary = "";
+        String description = "";
+
+        HashMap<String, String> alertDetails = this.parsedOpsgenieConfig.getAlertDetails();
+
+        alertDetails.put("endpoint", endpoint);
+        alertDetails.put("url", url);
+        alertDetails.put("method", method);
+
     }
 
     public void raiseOpsgenieAlert(HttpServletRequest request, OpsgenieAlertType alertType, int alertStatusCode) {
