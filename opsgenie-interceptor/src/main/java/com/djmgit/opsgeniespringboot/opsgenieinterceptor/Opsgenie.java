@@ -103,6 +103,10 @@ public class Opsgenie {
         if (this.parsedOpsgenieConfig.getResponders() != null) {
             alertPayload.setResponders(this.parsedOpsgenieConfig.getResponders());
         }
+
+        try {
+            this.makeOpsgenieApiRequest(String.format("%s/v2/alerts"), this.parsedOpsgenieConfig.getOpsgenieApiKey(), alertPayload);
+        } catch (Exception e) {}
     }
 
     public void raiseOpsgenieLatencyAlert(HttpServletRequest request, int elapsedTime, int alertStatusCode) {
