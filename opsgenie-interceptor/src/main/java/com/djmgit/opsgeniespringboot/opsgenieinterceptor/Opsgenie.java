@@ -136,17 +136,23 @@ public class Opsgenie {
 
     public void raiseOpsgenieAlert(HttpServletRequest request, OpsgenieAlertType alertType, int alertStatusCode) {
 
-        // implement alert on response status code
+        if (alertType == OpsgenieAlertType.STATUS_ALERT) {
+            this.raiseOpsgenieStatusAlert(request, alertStatusCode, "");
+        }
     }
 
     public void raiseOpsgenieAlert(HttpServletRequest request, OpsgenieAlertType alertType, int alertStatusCode, String alertStatusClass) {
 
-        // implement alert on response status class
+        if (alertType == OpsgenieAlertType.STATUS_ALERT) {
+            this.raiseOpsgenieStatusAlert(request, alertStatusCode, alertStatusClass);
+        }
     }
 
     public void raiseOpsgenieAlert(HttpServletRequest request, OpsgenieAlertType alertType, int alertStatusCode, int elapsedTime) {
 
-        // implement alert on response threshold time
+        if (alertType == OpsgenieAlertType.LATENCY_ALERT) {
+            this.raiseOpsgenieLatencyAlert(request, elapsedTime, alertStatusCode);
+        }
     }
 
     private HttpHeaders getOpsgenieRequestHeaders(String opsgenieApiKey) {
