@@ -90,7 +90,7 @@ public class Opsgenie {
         }
 
         try {
-            this.makeOpsgenieApiRequest(String.format("%s/v2/alerts"), this.parsedOpsgenieConfig.getOpsgenieApiKey(), alertPayload);
+            this.makeOpsgenieApiRequest(String.format("%s/v2/alerts", this.parsedOpsgenieConfig.getOpsgenieApiBase()), this.parsedOpsgenieConfig.getOpsgenieApiKey(), alertPayload);
         } catch (Exception e) {}
     }
 
@@ -107,7 +107,31 @@ public class Opsgenie {
         alertDetails.put("endpoint", endpoint);
         alertDetails.put("url", url);
         alertDetails.put("method", method);
+        alertDetails.put("status_code", "" + alertStatusCode);
 
+        OpsgenieAlert alertPayload = new OpsgenieAlert();
+        String alias = this.parsedOpsgenieConfig.getServiceId() + "-" + endpoint + "-response-latency-alert";
+        if (this.parsedOpsgenieConfig.getAlertLatencyAlias() != "") {
+            alias = alias + "-" + this.parsedOpsgenieConfig.getAlertStatusAlias();
+        }
+
+        summary = String.format("%s showed unexpected response time : %dms | Alert generated from %s", endpoint, elapsedTime, this.parsedOpsgenieConfig.getServiceId());
+        description = String.format("%s showed unexpected response time : %dms. Complete URL : %s called with method : %s. Endpoint served by service : %s on host : %s",
+                                    endpoint, elapsedTime, url, method, this.parsedOpsgenieConfig.getServiceId());
+        alertPayload.setMessage(summary);
+        alertPayload.setDescription(description);
+        alertPayload.setAlias(alias);
+        alertPayload.setTags(this.parsedOpsgenieConfig.getAlertTags());
+        alertPayload.setDetails(alertDetails);
+        alertPayload.setPriority(this.parsedOpsgenieConfig.getAlertPriority());
+
+        if (this.parsedOpsgenieConfig.getResponders() != null) {
+            alertPayload.setResponders(this.parsedOpsgenieConfig.getResponders());
+        }
+
+        try {
+            this.makeOpsgenieApiRequest(String.format("%s/v2/alerts", this.parsedOpsgenieConfig.getOpsgenieApiBase()), this.parsedOpsgenieConfig.getOpsgenieApiKey(), alertPayload);
+        } catch (Exception e) {}
     }
 
     public void raiseOpsgenieAlert(HttpServletRequest request, OpsgenieAlertType alertType, int alertStatusCode) {
