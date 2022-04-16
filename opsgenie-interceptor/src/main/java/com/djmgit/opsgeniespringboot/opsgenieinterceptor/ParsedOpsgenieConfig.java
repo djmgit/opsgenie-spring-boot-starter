@@ -204,14 +204,20 @@ public class ParsedOpsgenieConfig {
     }
 
     private ArrayList<String> stringToArraylistTransformerPopulator(String propertyValString) {
+        if (propertyValString == "" || propertyValString == null) {
+            return null;
+        }
         ArrayList<String> propertyValList = new ArrayList<String>(Arrays.asList(propertyValString.trim().split(",")).stream().map(obj -> obj.trim())
                                                                                                    .collect(Collectors.toList()));
         return propertyValList;
     }
 
-    private HashMap<String, String> stringToHashMapTransformerPopulator(String propertyVaString) {
+    private HashMap<String, String> stringToHashMapTransformerPopulator(String propertyValString) {
+        if (propertyValString == "" || propertyValString == null) {
+            return null;
+        }
         HashMap<String, String> details = new HashMap<String,String>();
-        Arrays.asList(propertyVaString.trim().split(",")).stream().map(obj -> obj.trim())
+        Arrays.asList(propertyValString.trim().split(",")).stream().map(obj -> obj.trim())
                                                          .collect(Collectors.toList())
                                                          .forEach((e) -> {
                                                              details.put(e.split(":")[0].trim(), e.split(":")[1].trim());
