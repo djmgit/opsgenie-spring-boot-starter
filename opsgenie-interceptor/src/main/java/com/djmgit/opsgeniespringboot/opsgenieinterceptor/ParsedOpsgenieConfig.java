@@ -220,7 +220,9 @@ public class ParsedOpsgenieConfig {
     }
 
     private ArrayList<Integer> parseAlertStatusCodes(String propertyValString) {
-
+        if (propertyValString == "" || propertyValString == null) {
+            return null;
+        }
         ArrayList<Integer> propertyValList = new ArrayList<Integer>(this.stringToArraylistTransformerPopulator(propertyValString).stream()
                                                                                                                             .map(obj -> Integer.parseInt(obj))
                                                                                                                             .collect(Collectors.toList()));
@@ -250,7 +252,9 @@ public class ParsedOpsgenieConfig {
     }
 
     private ArrayList<OpsgenieResponder> parseOpsgenieAlertResponders(String propertyValString) {
-
+        if (propertyValString == "" || propertyValString == null) {
+            return null;
+        }
         ArrayList<OpsgenieResponder> opsgenieResponders = new ArrayList<OpsgenieResponder>();
         this.stringToArraylistTransformerPopulator(propertyValString).forEach((e) -> {
             String responderId = e.split(":")[0].trim();
