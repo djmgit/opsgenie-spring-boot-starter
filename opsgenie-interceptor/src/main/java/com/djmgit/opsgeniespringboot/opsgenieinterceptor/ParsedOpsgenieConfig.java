@@ -156,7 +156,11 @@ public class ParsedOpsgenieConfig {
     }
 
     public void setAlertStatusAlias(String alertStatusAlias) {
-        this.alertStatusAlias = alertStatusAlias;
+        if (alertStatusAlias == "" || alertStatusAlias == null) {
+            this.alertStatusAlias = this.alertAlias;
+        } else {
+            this.alertStatusAlias = alertStatusAlias;
+        }
     }
 
     public String getAlertLatencyAlias() {
