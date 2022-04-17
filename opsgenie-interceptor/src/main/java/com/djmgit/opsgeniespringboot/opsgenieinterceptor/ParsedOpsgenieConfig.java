@@ -236,7 +236,11 @@ public class ParsedOpsgenieConfig {
     }
 
     private int parseThresholdResponseTime(String propertyValString) {
-        return Integer.parseInt(propertyValString);
+        try {
+            return Integer.parseInt(propertyValString);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 
     private OpsgenieAlertPriorities parseAlertPriority(String propertyValString) {
