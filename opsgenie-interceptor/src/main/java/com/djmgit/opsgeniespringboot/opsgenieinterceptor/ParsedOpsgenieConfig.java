@@ -168,7 +168,11 @@ public class ParsedOpsgenieConfig {
     }
 
     public void setAlertLatencyAlias(String alertLatencyAlias) {
-        this.alertLatencyAlias = alertLatencyAlias;
+        if (alertLatencyAlias == "" || alertLatencyAlias == null) {
+            this.alertLatencyAlias = this.alertAlias;
+        } else {
+            this.alertLatencyAlias = alertLatencyAlias;
+        }
     }
 
     public String getAlertExceptionAlias() {
@@ -176,7 +180,11 @@ public class ParsedOpsgenieConfig {
     }
 
     public void setAlertExceptionAlias(String alertExceptionAlias) {
-        this.alertExceptionAlias = alertExceptionAlias;
+        if (alertExceptionAlias == "" || alertExceptionAlias == null) {
+            this.alertExceptionAlias = this.alertAlias;
+        } else {
+            this.alertExceptionAlias = alertExceptionAlias;
+        }
     }
 
     public ArrayList<OpsgenieResponder> getResponders() {
