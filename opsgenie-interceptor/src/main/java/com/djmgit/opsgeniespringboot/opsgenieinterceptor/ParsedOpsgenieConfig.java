@@ -1,6 +1,5 @@
 package com.djmgit.opsgeniespringboot.opsgenieinterceptor;
 
-import com.djmgit.opsgeniespringboot.opsgenieinterceptor.OpsgenieConfig;
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieAlertPriorities;
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieResponder;
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieResponderTypes;
@@ -12,8 +11,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class ParsedOpsgenieConfig {

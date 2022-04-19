@@ -1,7 +1,5 @@
 package com.djmgit.opsgeniespringboot.opsgenieinterceptor;
 
-import static com.djmgit.opsgeniespringboot.opsgenieinterceptor.OpsgenieConfigParams.*;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
