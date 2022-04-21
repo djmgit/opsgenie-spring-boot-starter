@@ -1,7 +1,5 @@
 package com.djmgit.opsgeniespringboot.autoconfigure;
 
-import static com.djmgit.opsgeniespringboot.opsgenieinterceptor.OpsgenieConfigParams.*;
-
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.Opsgenie;
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.OpsgenieConfig;
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.RequestInterceptor;
