@@ -1,3 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.djmgit.opsgeniespringboot.autoconfigure.RequestInterceptorAutoconfiguration, \
-com.djmgit.opsgeniespringboot.autoconfigure.OpsgenieAutoconfiguration
+com.djmgit.opsgeniespringboot.autoconfigure.RequestInterceptorAutoconfiguration

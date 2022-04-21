@@ -4,23 +4,23 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "opsgenie.springboot")
 public class OpsgenieProperties {
     
-    private String opsgenieApiKey;
-    private String opsgenieApiBase;
-    private String alertStatusCodes;
-    private String alertStatusClasses;
-    private String monitoredEndpoints;
-    private String ignoredEndpoints;
-    private String thresholdResponseTime;
-    private String responseTimeMonitoredEndpoints;
-    private String alertTags;
-    private String alertDetails;
-    private String alertPriority;
-    private String alertAlias;
-    private String alertStatusAlias;
-    private String alertLatencyAlias;
-    private String alertExceptionAlias;
-    private String responder;
-    private String serviceId;
+    private String opsgenieApiKey = "";
+    private String opsgenieApiBase = "";
+    private String alertStatusCodes = "";
+    private String alertStatusClasses = "";
+    private String monitoredEndpoints = "";
+    private String ignoredEndpoints = "";
+    private String thresholdResponseTime = "";
+    private String responseTimeMonitoredEndpoints = "";
+    private String alertTags = "";
+    private String alertDetails = "";
+    private String alertPriority = "";
+    private String alertAlias = "";
+    private String alertStatusAlias = "";
+    private String alertLatencyAlias = "";
+    private String alertExceptionAlias = "";
+    private String responder = "";
+    private String serviceId = "";
 
     public String getOpsgenieApiKey() {
         return this.opsgenieApiKey;
