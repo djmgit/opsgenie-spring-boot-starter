@@ -114,7 +114,7 @@ public class Opsgenie {
 
         summary = String.format("%s showed unexpected response time : %dms | Alert generated from %s", endpoint, elapsedTime, this.parsedOpsgenieConfig.getServiceId());
         description = String.format("%s showed unexpected response time : %dms. Complete URL : %s called with method : %s. Endpoint served by service : %s on host : %s",
-                                    endpoint, elapsedTime, url, method, this.parsedOpsgenieConfig.getServiceId());
+                                    endpoint, elapsedTime, url, method, this.parsedOpsgenieConfig.getServiceId(), this.parsedOpsgenieConfig.getHost());
         alertPayload.setMessage(summary);
         alertPayload.setDescription(description);
         alertPayload.setAlias(alias);
