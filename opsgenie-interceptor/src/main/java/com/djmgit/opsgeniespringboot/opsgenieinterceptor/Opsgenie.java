@@ -53,10 +53,9 @@ public class Opsgenie {
         alertDetails.put("endpoint", endpoint);
         alertDetails.put("url", url);
         alertDetails.put("method", method);
+        alertDetails.put("status_code", "" + alertStatusCode);
 
         if (alertStatusClass != "") {
-            alertDetails.put("status_code", "" + alertStatusCode);
-        } else {
             alertDetails.put("status_class", alertStatusClass);
         }
 
