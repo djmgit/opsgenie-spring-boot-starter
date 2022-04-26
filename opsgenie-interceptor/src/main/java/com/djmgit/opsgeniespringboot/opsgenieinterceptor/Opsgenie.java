@@ -13,7 +13,9 @@ import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieAlertTyp
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 public class Opsgenie {
@@ -160,16 +162,29 @@ public class Opsgenie {
         return headers;
     }
 
-    private ResponseEntity<String> makeOpsgenieApiRequest(String opsgenieAlertEndpoint, String opsgenieApiKey, OpsgenieAlert alertPayload) throws URISyntaxException {
+    private ResponseEntity<String> makeOpsgenieApiRequest(String opsgenieAlertEndpoint, String opsgenieApiKey, OpsgenieAlert alertPayload) {
 
         RestTemplate restTemplate = new RestTemplate();
-        URI opsgenieUri = new URI(opsgenieAlertEndpoint);
+        URI opsgenieUri;
+        try {
+            opsgenieUri = new URI(opsgenieAlertEndpoint);
+        } catch (URISyntaxException e) {
+            return null;
+        }
 
         HttpHeaders opsgenieRequestHeaders = this.getOpsgenieRequestHeaders(opsgenieApiKey);
-        HttpEntity<OpsgenieAlert> opsgenieApiRequest = new HttpEntity<OpsgenieAlert>(alertPayload, opsgenieRequestHeaders);        
-        ResponseEntity<String> result = restTemplate.postForEntity(opsgenieUri, opsgenieApiRequest, String.class);
+        HttpEntity<OpsgenieAlert> opsgenieApiRequest = new HttpEntity<OpsgenieAlert>(alertPayload, opsgenieRequestHeaders);
+        ResponseEntity<String> response;
+        try {
+            response = restTemplate.postForEntity(opsgenieUri, opsgenieApiRequest, String.class);
+        } catch(RestClientException e) {
+            return null;
+        }
 
-        return result;
+        if (response.getStatusCode() != HttpStatus.ACCEPTED) {
+            // log unsuccessfuly alert request creation
+        }
+        return response;
     }
     
 }
