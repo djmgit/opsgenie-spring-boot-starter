@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieAlert;
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.models.OpsgenieAlertType;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ public class Opsgenie {
     
     private OpsgenieConfig opsgenieConfig;
     private ParsedOpsgenieConfig parsedOpsgenieConfig;
+    private static final Logger logger = LogManager.getLogger(Opsgenie.class);
 
     public Opsgenie() {}
 
@@ -169,6 +172,7 @@ public class Opsgenie {
         try {
             opsgenieUri = new URI(opsgenieAlertEndpoint);
         } catch (URISyntaxException e) {
+            logger.error("Invalid URI provided : {}", e);
             return null;
         }
 
@@ -178,11 +182,12 @@ public class Opsgenie {
         try {
             response = restTemplate.postForEntity(opsgenieUri, opsgenieApiRequest, String.class);
         } catch(RestClientException e) {
+            logger.error("RestClient faced exception : {}", e);
             return null;
         }
 
         if (response.getStatusCode() != HttpStatus.ACCEPTED) {
-            // log unsuccessfuly alert request creation
+            logger.error(String.format("Failed to create alert. Opsgenie API returned %d", response.getStatusCode().value()));
         }
         return response;
     }
