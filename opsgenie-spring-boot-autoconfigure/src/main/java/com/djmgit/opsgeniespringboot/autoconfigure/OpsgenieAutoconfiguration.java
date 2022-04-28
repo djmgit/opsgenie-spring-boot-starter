@@ -1,6 +1,5 @@
 package com.djmgit.opsgeniespringboot.autoconfigure;
 
-import com.djmgit.opsgeniespringboot.opsgenieinterceptor.Intercept;
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.Opsgenie;
 import com.djmgit.opsgeniespringboot.opsgenieinterceptor.OpsgenieConfig;
 
@@ -18,12 +17,6 @@ public class OpsgenieAutoconfiguration {
 
     @Autowired
     private OpsgenieProperties opsgenieProperties;
-
-    @Bean
-    @ConditionalOnMissingBean
-    public Intercept interceptor() {
-        return new Intercept();
-    }
 
     @Bean
     @ConditionalOnMissingBean
