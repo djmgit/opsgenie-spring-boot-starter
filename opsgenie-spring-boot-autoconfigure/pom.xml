@@ -8,7 +8,7 @@
     <name>opsgenie-spring-boot-autoconfigure</name>
 
     <parent>
-        <groupId>con.djmgit.opsgenie-spring-boot</groupId>
+        <groupId>com.djmgit.opsgenie-spring-boot</groupId>
         <artifactId>opsgenie-spring-boot</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
