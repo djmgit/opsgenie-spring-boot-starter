@@ -2,13 +2,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.djmgit.opsgenie-spring-boot</groupId>
+    <groupId>com.github.djmgit</groupId>
     <artifactId>opsgenie-spring-boot-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>opsgenie-spring-boot-starter</name>
 
     <parent>
-        <groupId>con.djmgit.opsgenie-spring-boot</groupId>
+        <groupId>com.github.djmgit</groupId>
         <artifactId>opsgenie-spring-boot</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -20,12 +20,12 @@
             <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.djmgit.opsgenie-spring-boot</groupId>
+            <groupId>com.github.djmgit</groupId>
             <artifactId>opsgenie-spring-boot-autoconfigure</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${opsgenie-spring-boot-autoconfigure.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.djmgit.opsgenie-spring-boot</groupId>
+            <groupId>com.github.djmgit</groupId>
             <artifactId>opsgenie-interceptor</artifactId>
             <version>${opsgenie-interceptor.version}</version>
         </dependency>
@@ -33,6 +33,7 @@
 
     <properties>
         <opsgenie-interceptor.version>0.0.1-SNAPSHOT</opsgenie-interceptor.version>
+        <opsgenie-spring-boot-autoconfigure.version>0.0.1-SNAPSHOT</opsgenie-spring-boot-autoconfigure.version>
         <spring-boot.version>2.2.6.RELEASE</spring-boot.version>
     </properties>
 
