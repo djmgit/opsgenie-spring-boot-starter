@@ -4,7 +4,6 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.djmgit</groupId>
     <artifactId>opsgenie-interceptor</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>opsgenie-interceptor</name>
 
     <parent>
